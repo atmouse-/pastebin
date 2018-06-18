@@ -1,17 +1,10 @@
-function highlight(type_input, language) {
+function highlight(language) {
+    var type_input = $('#contents_type');
     var code_container = $('pre');
     var worker = new Worker('../hljs_worker.js');
-    type_input.prop('disabled', true);
-    var placeholder = 'Highlighting the paste';
-    if (language) {
-        placeholder += ' for [' + language + ']';
-    }
-    placeholder += '...';
-    type_input.val(placeholder);
     worker.onmessage = function(event) {
         code_container.html(event.data.value);
-        type_input.val(event.data.language);
-        type_input.prop('disabled', false);
+        type_input.text(event.data.language);
         $('#contents_type_label').text(event.data.language);
     }
     var message = {text: code_container.text()};
@@ -34,14 +27,5 @@ $(document).ready(function(){
     populate_languages();
 
     // Start a highlighting task.
-    var contents_type = $('#contents_type');
-    highlight(contents_type);
-
-    // Make language selector react to 'enter' key.
-    $(contents_type).keyup(function(event) {
-        if (event.keyCode == 13) {
-            highlight(contents_type, $(contents_type).val());
-            return false;
-        }
-    });
+    highlight();
 })

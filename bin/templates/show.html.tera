@@ -16,16 +16,15 @@
         {% endif %}
         <span id="contents_type_label" title="Highlighted language" uk-tooltip class="uk-label uk-label"></span>
     </p>
-    <div class="uk-width-1-5">
-        <input
-            id="contents_type"
-            title="Contents type"
-            class="uk-input"
-            list="supported_languages"
-            autocomplete="off"
-            uk-tooltip="pos: bottom-left"
-        />
-        <datalist id="supported_languages"></datalist>
+    <div class="uk-margin">
+        <div uk-form-custom="target: > * > span:last-child">
+            <select id="supported_languages" onchange="highlight(this.value);">
+            </select>
+            <span class="uk-link">
+                <span uk-icon="icon: pencil"></span>
+                <span id="contents_type"></span>
+            </span>
+        </div>
     </div>
     <div class="uk-margin">
         <pre style="padding-top: 1em"><code>{{data}}</code></pre>
